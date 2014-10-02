@@ -1,0 +1,7 @@
+*.log
+config/*.json
+model/*
+
+# Mac system file
+.DS_Store
+node_modules
