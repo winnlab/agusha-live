@@ -1,4 +1,1 @@
-*.js
-*.coffee
-*.json
 !.gitignore
