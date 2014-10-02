@@ -1,0 +1,41 @@
+{
+  "name": "Jupiter",
+  "version": "0.7.9-alpha.1",
+  "description": "Jupiter framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha server/test --require coffee-script --compilers coffee:coffee-script/register --recursive --bundle test --module_express --option_express_port 3015 --isTest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rastopyr/Jupiter.git"
+  },
+  "keywords": [
+    "jupter",
+    "web-framework"
+  ],
+  "author": "Rastopyr <rastopyr@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rastopyr/Jupiter/issues"
+  },
+  "homepage": "https://github.com/Rastopyr/Jupiter",
+  "dependencies": {
+    "moment": "2.8.3",
+    "winston": "0.8.0",
+    "underscore": "1.7.0",
+    "forever": "0.11.1",
+    "optimist": "0.6.1",
+    "express": "4.9.5",
+    "feathers": "1.0.0-pre.5",
+    "body-parser": "1.9.0",
+    "mongoose": "~3.8.17"
+  },
+  "devDependencies": {
+    "coffee-script": "1.7.1",
+    "should": "4.0.4",
+    "mocha": "1.21.3",
+    "supertest": "0.14.0",
+    "request": "2.44.0"
+  }
+}
