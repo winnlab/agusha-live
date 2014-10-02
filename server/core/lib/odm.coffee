@@ -16,6 +16,9 @@ loadModels = (modelsDir, mongoose) ->
 	modelsFiles = fs.readdirSync modelsDir
 
 	_.each modelsFiles, (model, key) ->
+		if model.match ///^\.///
+			return false
+
 		modelName = path.basename model, path.extname model
 		modelObj = require path.join modelsDir, modelName
 
@@ -87,7 +90,7 @@ class ODM extends events.EventEmitter
 		name = options.model || @options.model
 		
 		if not model = models.pool[name]
-			error.throw 'Not model exist', 'MTHDNEXST'
+			error.throw "Not exist model \"#{name}\"", 'MTHDNEXST'
 
 		if not method = options.method or not model[options.method]
 			error.throw 'For execute, not method specified', 'MTHDNEXST'
