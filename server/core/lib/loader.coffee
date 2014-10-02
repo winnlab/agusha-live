@@ -102,7 +102,11 @@ class Loader
 		bundles = {}
 
 		_.each fs.readdirSync(bundlePath), (item, ley) ->
+			if item.match ///^\.///
+				return false
+
 			stat = fs.statSync path.join bundlePath, item
+			
 			if not stat.isFile()
 				return false
 
@@ -116,6 +120,9 @@ class Loader
 		modules = {}
 
 		_.each fs.readdirSync(modulePath), (item, key) ->
+			if item.match ///^\.///
+				return false
+
 			moduleName = getEntityName item
 			modules[moduleName] = require path.join self.modulePath, moduleName
 

@@ -47,7 +47,11 @@ class Config
 		else
 			configFiles = fs.readdirSync @configDir
 
+
 		_.each configFiles, (item, key, list) ->
+			if item.match ///^\.///
+				return false
+
 			configFile = require path.join configDir, item
 
 			self.data = _.extend self.data, configFile
