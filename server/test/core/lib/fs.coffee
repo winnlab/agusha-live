@@ -30,7 +30,7 @@ describe '#FS instance creating', () ->
 		(localFS.mode).should.be.exactly testedMode
 
 describe '#FS creating file', () ->
-	baseDir = basePath
+	baseDir = pathes.base
 	fileName = "nameFile"
 	dataFile = "Roman"
 	creatingFile = path.resolve path.join baseDir, fileName
@@ -57,7 +57,7 @@ describe '#FS creating file', () ->
 
 
 describe '#FS expand directory', () ->
-	baseDir = basePath
+	baseDir = pathes.base
 	relDir = path.normalize "/level1/level2/level3"
 	expandDir = path.resolve path.join baseDir, relDir
 	removedPath = path.resolve path.join baseDir, getSegment(relDir, 1)
@@ -88,7 +88,7 @@ describe '#FS expand directory', () ->
 		FS.removeDirSync removedPath
 
 describe '#FS empty directory', () ->
-	baseDir = basePath
+	baseDir = pathes.base
 	relDir = path.normalize "/level1/level2/level3"
 	expandDir = path.resolve path.join baseDir, relDir
 	emptiedPath = path.resolve path.join baseDir, getSegment(relDir, 1)
@@ -124,7 +124,7 @@ describe '#FS empty directory', () ->
 		FS.removeDirSync emptiedPath
 
 describe '#FS remove directory', () ->
-	baseDir = basePath
+	baseDir = pathes.base
 	relDir = path.normalize "/level1"
 	expandDir = path.resolve path.join baseDir, relDir
 	removedPath = path.resolve path.join baseDir, getSegment(relDir, 1)

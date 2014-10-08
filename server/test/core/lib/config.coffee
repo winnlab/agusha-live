@@ -7,6 +7,8 @@ index = require '../../../core/index'
 
 FS = new (getLibrary 'core/fs')
 
+fh = getUtility 'path'
+
 testedConfig =
 	admin:
 		name: "Roman"
@@ -20,8 +22,8 @@ testedConfig2 =
 configName = "test.json"
 configName2 = "test2.json"
 
-pathToConf = path.resolve path.join appBasePath, 'config', configName
-pathToConf2 = path.resolve path.join appBasePath, 'config', configName2
+pathToConf = fh.resolve pathes.app, 'config', configName
+pathToConf2 = fh.resolve pathes.app, 'config', configName2
 
 before ()->
 	data = JSON.stringify testedConfig

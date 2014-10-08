@@ -102,7 +102,7 @@ class Logger
 
 	setLogName = () ->
 		@logName = moment().format 'MM-DD-YYYY'
-		logPath = pathUtility.resolveJoin baseServerPath, 'logs', @name, "#{@logName}.log"
+		logPath = pathUtility.resolve pathes.server, 'logs', @name, "#{@logName}.log"
 		transports.file.options.filename = logPath
 
 	setInitDate = () ->
@@ -122,8 +122,8 @@ class Logger
 		self = @
 
 		@file =
-			baseDir: pathUtility.resolveJoin baseServerPath, "logs/#{self.name}"
-			path: pathUtility.resolveJoin baseServerPath, "logs/#{self.name}/#{self.logName}"
+			baseDir: pathUtility.resolve pathes.server, "logs/#{self.name}"
+			path: pathUtility.resolve pathes.server, "logs/#{self.name}/#{self.logName}"
 
 	createWinstonInstance = () ->
 		@instance = new (winston.Logger)

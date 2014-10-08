@@ -20,11 +20,11 @@ testedArgs =
 
 Loader = {}
 
-bundlePath = path.join baseServerPath, 'test', 'loader', 'bundle', 'test.coffee'
-modulePath = path.join baseServerPath, 'test', 'loader', 'module', 'express.coffee'
+bundlePath = path.join pathes.server, 'test', 'loader', 'bundle', 'test.coffee'
+modulePath = path.join pathes.server, 'test', 'loader', 'module', 'express.coffee'
 
-writedBundlePath = path.join appBasePath, 'loader', 'bundle', 'test.coffee'
-writedModulePath = path.join appBasePath, 'loader', 'module', 'express.coffee'
+writedBundlePath = path.join pathes.app, 'loader', 'bundle', 'test.coffee'
+writedModulePath = path.join pathes.app, 'loader', 'module', 'express.coffee'
 
 before (done) ->
 	bundleRd = fs.createReadStream(bundlePath)
@@ -60,15 +60,6 @@ describe '#Loader.parse', () ->
 
 		_.each modules, (module, key, list) ->
 			should(module.start).be.a.Function
-
-	it '#Loader.start should bind test server', (done) ->
-		Loader.parseArgs()
-		Loader.start()
-
-		request 'http://localhost:3015' , ( err, response, body ) ->
-			should(err).eql null
-			should(body).eql "Hello world"
-			done()
 
 
 

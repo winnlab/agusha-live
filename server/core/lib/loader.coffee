@@ -88,8 +88,8 @@ class Loader
 	constructor: () ->
 		@args = argv
 
-		@bundlePath = path.join appBasePath, 'loader', 'bundle'
-		@modulePath = path.join appBasePath, 'loader', 'module'
+		@bundlePath = path.join pathes.app, 'loader', 'bundle'
+		@modulePath = path.join pathes.app, 'loader', 'module'
 		@preloadBundles()
 		@preloadModules()
 		@parseArgs()

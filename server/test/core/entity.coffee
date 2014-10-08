@@ -31,7 +31,7 @@ describe '#getLibrary', () ->
 				throw new Error "Exist library #{libName} or failed work in #getLibrary"
 
 	it 'should be required from core', () ->
-		requiredLib = require path.join coreBasePath, "lib/fs"
+		requiredLib = require path.join pathes.core, "lib/fs"
 		libName = "core/fs"
 
 		try
@@ -43,7 +43,7 @@ describe '#getLibrary', () ->
 			throw new Error "#getLibrary required not right library"
 
 	it 'should be required from application', () ->
-		testedAppLib = path.resolve path.join appBasePath, '/lib/tested.coffee'
+		testedAppLib = path.resolve path.join pathes.app, '/lib/tested.coffee'
 
 		fs.writeFileSync testedAppLib, ''
 		requiredLib = require testedAppLib
@@ -62,59 +62,9 @@ describe '#getLibrary', () ->
 
 		fs.unlinkSync testedAppLib
 
-describe '#getModel', () ->
-	testedCoreModel = path.resolve path.join coreBasePath, '/model/tested.coffee'
-	testedAppModel = path.resolve path.join appBasePath, '/model/tested.coffee'
-
-	it '#getModel should be exist', ()->
-		getModel
-
-	it 'should be throw exepcion', () ->
-		modelName ="#{dateTime}"
-
-		try
-			if getModel modelName
-				throw new Error "Exist model #{modelName} or failed work in #getModel"
-
-	it 'should be required from core', () ->
-		fs.writeFileSync testedCoreModel, ''
-
-		modelName = "tested"
-		requiredModel = require path.join coreBasePath, "model/tested"
-
-		try
-			model = getModel modelName
-		catch err
-			fs.unlinkSync testedCoreModel
-			throw err
-
-		if model is not requiredModel
-			fs.unlinkSync testedCoreModel
-			throw new Error "#getLibrary required not right library"
-
-		fs.unlinkSync testedCoreModel
-
-	it 'should be required from application', () ->
-		fs.writeFileSync testedAppModel, ''
-		requiredUtility = require testedAppModel
-
-		modelName = 'application/tested'
-
-		try
-			model = getModel modelName
-		catch err
-			fs.unlinkSync testedAppModel
-			throw err
-
-		if model is not requiredUtility
-			fs.unlinkSync testedAppModel
-			throw new Error "#getLibrary required not right library"
-
-		fs.unlinkSync testedAppModel
-
 describe '#getUtility', () ->
-	testedCoreUtility = path.resolve path.join coreBasePath, '/utility/tested.coffee'
-	testedAppUtility = path.resolve path.join appBasePath, '/utility/tested.coffee'
+	testedCoreUtility = path.resolve path.join pathes.core, '/utility/tested.coffee'
+	testedAppUtility = path.resolve path.join pathes.app, '/utility/tested.coffee'
 
 	it '#getUtility should be exist', ()->
 		getUtility
@@ -132,7 +82,7 @@ describe '#getUtility', () ->
 		fs.writeFileSync testedCoreUtility, ''
 
 		utilityName = "tested"
-		requiredUtility = require path.join coreBasePath, "utility/tested"
+		requiredUtility = require path.join pathes.core, "utility/tested"
 
 		try
 			utility = getUtility utilityName
@@ -165,7 +115,7 @@ describe '#getUtility', () ->
 		fs.unlinkSync testedAppUtility
 
 describe '#getController', () ->
-	testedAppController = path.resolve path.join appBasePath, '/controller/tested.coffee'
+	testedAppController = path.resolve path.join pathes.app, '/controller/tested.coffee'
 
 	it '#getController should be exist', ()->
 		getController
@@ -177,7 +127,7 @@ describe '#getController', () ->
 			controller = getController controllerName
 
 		if controller
-			throw new Error "Exist model #{modelName} or failed work in #getUtility"
+			throw new Error "Exist model #{modelName} or failed work in #getController"
 
 	it 'should be required from application', () ->
 		fs.writeFileSync testedAppController, ''
@@ -198,7 +148,7 @@ describe '#getController', () ->
 		fs.unlinkSync testedAppController
 
 describe '#getApplication', () ->
-	testedAppEntity = path.resolve path.join appBasePath, '/tested.coffee'
+	testedAppEntity = path.resolve path.join pathes.app, '/tested.coffee'
 
 	it '#getApplication should be exist', ()->
 		getApplication

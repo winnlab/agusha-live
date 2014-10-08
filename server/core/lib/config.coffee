@@ -26,7 +26,7 @@ class Config
 		@preloadConfigs name
 
 	constructor: () ->
-		@configDir = path.join appBasePath, 'config'
+		@configDir = path.join pathes.app, 'config'
 		@data = {}
 		self = @
 
