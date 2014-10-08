@@ -1,120 +1,137 @@
 
 fs = require 'fs'
 http = require 'http'
-cluster = require 'cluster'
 
 _ = require 'underscore'
-express = require 'express'
 should = require 'should'
 request = require 'supertest'
 
 index = require '../../../core/index'
 
-Server = getLibrary 'server'
+Middleware = getLibrary 'server/protos/middleware'
+ServerSingle = getLibrary 'server/single'
+Router = getLibrary 'server/protos/router'
 
-describe '#Server.single', () ->
-	it '#Server; should be a function', () ->
-		should(Server).be.a.Function
+describe '#Server', () ->
+	describe '#Middleware', () ->
+		it 'should be a function', () ->
+			should(Middleware).be.a.Function
 
-	it '#Server.single; single web server should must implemented', (done) ->
-		options =
-			app: express
-			port: 3001
+		it 'should be bind to port', (done) ->
+			layers = Middleware()
 
-		server = new Server options
-		server.listen()
+			layers.listen(3000)
 
-		request(server.app)
-			.get('/')
-			.expect(404)
-			.end done
+			request(layers)
+				.get('/')
+				.expect(404)
+				.end done
 
-	it '#Server.routing; should routes function muste implemented', (done)->
-		options =
-			app: express
-			port: 3000
-			routes: ()->
-				@get '/', (req, res) ->
-					res.send 'Hello world'
+		it 'midlleware layer must be implemented', (done) ->
+			layers = Middleware()
 
-		server = new Server options
-		server.listen()
+			layers.use (req, res, next) ->
+				req.midlleware = 'exist'
+				next()
 
-		request(server.app)
-			.get('/')
-			.expect(200)
-			.expect('Hello world')
-			.end done
+			layers.use (req, res, next) ->
+				res.end req.midlleware
 
+			layers.listen(3001)
 
-	it '#Server; should be bind server', (done)->
-		options =
-			app: express
-			port: 3002
-			routes: () ->
-				@get '/', (req, res) ->
-					res.send 'Hello world'
+			request(layers)
+				.get('/')
+				.expect(200)
+				.expect('exist')
+				.end done
 
-		server = new Server options
-		server.listen()
+		it 'middleware routing', (done) ->
+			layers = Middleware()
 
-		request(server.app)
-			.get('/')
-			.expect(200)
-			.expect('Hello world')
-			.end done
+			layers.use '/', (req, res, next) ->
+				req.page = 'index'
+				next()
 
-	it '#Server.configure; should be configure exist', (done) ->
-		options =
-			app: express
-			port: 3003
-			configure: () ->
-				@use '/', (req, res, next)->
-					req.hello = 'Hello world'
-					next()
-			routes: () ->
-				@get '/', (req, res) ->
-					res.send req.hello
+			layers.use '/post', (req, res, next) ->
+				req.page = 'post'
+				next()
 
-		server = new Server options
-		server.listen()
+			layers.use (req, res, next) ->
+				if req.page
+					return res.end req.page
 
-		request(server.app)
-			.get('/')
-			.expect(200)
-			.expect('Hello world')
-			.end done
+				res.end 'page not exist'
 
-# describe '#Server.cluster', () ->
+			layers.listen(3002)
 
-# 	it '#Server should be create a worker', () ->
+			request(layers)
+				.get('/')
+				.expect(200)
+				.expect('index')
+				.end (err, res) ->
+					if err
+						return done err
+
+					request(layers)
+						.get('/post')
+						.expect(200)
+						.expect('post')
+						.end done
+
+	describe '#Single', () ->
+		it 'should be bind to port', (done)->
+			app = ServerSingle()
+
+			app.listen(3003)
+
+			request(app)
+				.get('/')
+				.expect(404)
+				.end done
+
+		it 'should be exist #use', () ->
+			app = ServerSingle()
+
+			app.use.should.be.a.Function
+
+		it 'should be exist #listen', () ->
+			app = ServerSingle()
+
+			app.listen.should.be.a.Function
+
+		
+
+# describe '#Server.single', () ->
+# 	it '#Server; should be a function', () ->
+# 		should(Server).be.a.Function
+
+# 	it '#Server.single; single web server should must implemented', (done) ->
 # 		options =
 # 			app: express
-# 			port: 3004
-# 			workers: 2
-# 			# routes: () ->
-# 			# 	@get '/', (req, res) ->
-# 			# 		res.send 'Hello world'
+# 			port: 3001
 
 # 		server = new Server options
 # 		server.listen()
 
-		# workerSize = _.size cluster.workers
+# 		request(server.app)
+# 			.get('/')
+# 			.expect(404)
+# 			.end done
 
-		# should(workerSize).eql options.workers
 
-	# it '#Server should be equals of cluster.workers', () ->
-	# 	options =
-	# 		app: express
-	# 		workers: 2
+# 	it '#Server; should be bind server', (done)->
+# 		options =
+# 			app: express
+# 			port: 3002
+# 			routes: () ->
+# 				@get '/', (req, res) ->
+# 					res.send 'Hello world'
 
-	# 	server = new Server options
-	# 	server.listen()
+# 		server = new Server options
+# 		server.listen()
 
-		# workers = cluster.workers
-
-		# _.some workers, (worker, key) ->
-		# 	isContain = _.contains workers, worker
-		# 	console.log isContain
-		# 	return isContain
-
+# 		request(server.app)
+# 			.get('/')
+# 			.expect(200)
+# 			.expect('Hello world')
+# 			.end done
