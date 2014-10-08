@@ -1,24 +1,27 @@
 
 path = require 'path'
 
-basePath = path.resolve path.join __dirname, '../../'
-baseServerPath = path.resolve path.join __dirname, '../'
-coreBasePath = path.resolve __dirname
-appBasePath = path.resolve path.join __dirname, '../application'
+pathFunc = () ->
+	path.resolve path.join.apply path, arguments
 
-pathes = 
+basePath = pathFunc __dirname, '../../'
+baseServerPath = pathFunc __dirname, '../'
+coreBasePath = pathFunc __dirname
+appBasePath = pathFunc __dirname, '../application'
+
+epathes = 
 	lib:
-		core: path.resolve path.join coreBasePath, 'lib'
-		application: path.resolve path.join appBasePath, 'lib'
+		core: pathFunc coreBasePath, 'lib'
+		application: pathFunc appBasePath, 'lib'
 	model:
-		core: path.resolve path.join coreBasePath, 'model'
-		application: path.resolve path.join appBasePath, 'model'
+		core: pathFunc coreBasePath, 'model'
+		application: pathFunc appBasePath, 'model'
 	utility:
-		core: path.resolve path.join coreBasePath, 'utility'
-		application: path.resolve path.join appBasePath, 'utility'
+		core: pathFunc coreBasePath, 'utility'
+		application: pathFunc appBasePath, 'utility'
 	controller:
-		core: path.resolve path.join coreBasePath, 'controller'
-		application: path.resolve path.join appBasePath, 'controller'
+		core: pathFunc coreBasePath, 'controller'
+		application: pathFunc appBasePath, 'controller'
 	base:
 		core: coreBasePath
 		application: appBasePath
@@ -27,7 +30,7 @@ validType = (type) ->
 	if not type
 		type = 'base'
 
-	types = Object.keys pathes
+	types = Object.keys epathes
 
 	if type not in types
 		type = 'base'
@@ -57,8 +60,8 @@ getEntityPathes = (type, name) ->
 		eName = eName.replace regexp, ''
 
 	ePathes = 
-		app: path.resolve path.join pathes[type].application, eName
-		core: path.resolve path.join pathes[type].core, eName
+		app: pathFunc epathes[type].application, eName
+		core: pathFunc epathes[type].core, eName
 
 getEntity = (type, name) ->
 	type = validType type
@@ -74,9 +77,6 @@ getEntity = (type, name) ->
 getLibrary = (name) ->
 	getEntity 'lib', name
 
-getModel = (name) ->
-	getEntity 'model', name
-
 getUtility = (name) ->
 	getEntity 'utility', name
 
@@ -88,13 +88,13 @@ getApplication = (name) ->
 	name = "#{name}"
 	getEntity 'base', name
 
-global.basePath = basePath
-global.coreBasePath = coreBasePath
-global.appBasePath = appBasePath
-global.baseServerPath = baseServerPath
+global.pathes =
+	base: basePath
+	core: coreBasePath
+	app: appBasePath
+	server: baseServerPath
 
 global.getLibrary = getLibrary
-global.getModel = getModel
 global.getUtility = getUtility
 global.getController = getController
 global.getApplication = getApplication
