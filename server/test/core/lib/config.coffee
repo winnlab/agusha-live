@@ -1,11 +1,10 @@
 
 path = require 'path'
-fs = require 'fs'
 
 should = require 'should'
 index = require '../../../core/index'
 
-FS = new (getLibrary 'core/fs')
+fs = getLibrary 'core/fs'
 
 fh = getUtility 'path'
 
@@ -29,8 +28,8 @@ before ()->
 	data = JSON.stringify testedConfig
 	data2 = JSON.stringify testedConfig2
 
-	FS.createFileSync pathToConf, data, {}
-	FS.createFileSync pathToConf2, data2, {}
+	fs.outputFileSync pathToConf, data, {}
+	fs.outputFileSync pathToConf2, data2, {}
 
 describe "#Config preloading", () ->
 	it '#Config.reset should exists', ()->
