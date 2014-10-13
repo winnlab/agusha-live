@@ -1,6 +1,5 @@
 
 path = require 'path'
-fs = require 'fs'
 
 _ = require 'underscore'
 should = require 'should'
@@ -8,7 +7,7 @@ request = require 'request'
 
 index = require '../../../core/index'
 
-FS = new (getLibrary 'fs')
+fs = getLibrary 'fs'
 
 testedArgs =
 	_: []

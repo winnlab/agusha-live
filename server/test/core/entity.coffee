@@ -1,11 +1,10 @@
 
-fs = require 'fs'
 path = require 'path'
 
 index = require '../../core/index'
 should = require 'should'
 
-FS = new (getLibrary 'core/fs')
+fs = getLibrary 'core/fs'
 
 dateTime = new Date().getTime()
 
