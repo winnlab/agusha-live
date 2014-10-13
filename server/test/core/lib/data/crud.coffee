@@ -17,7 +17,7 @@ settedModel =
 		name:
 			type: String
 			required: true
-	name: "User"
+	name: "User" 
 	options:
 		collection: "test"
 
