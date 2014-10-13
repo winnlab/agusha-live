@@ -11,14 +11,13 @@ class RestResponse
 
 		return @
 	success: (data) ->
-		@send 502,
+		@send 200,
 			success: true
 			data: data
 	error: (err) ->
 		@send 200,
 			success: false
-			error: err
-
+			err: err
 	send: (code, data) ->
 		@res.setHeader 'Content-Type', 'application/json'
 
