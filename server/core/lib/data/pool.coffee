@@ -13,7 +13,8 @@ loadModels = () ->
 	self = @
 	models = fileHelper.loadDirJsSync modelPath
 
-	_.each models, self.set
+	for model in models
+		self.set model
 
 load = () ->
 	loadModels.call @
