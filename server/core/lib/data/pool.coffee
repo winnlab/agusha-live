@@ -4,14 +4,14 @@ path = require 'path'
 mongoose = require 'mongoose'
 _ = require 'underscore'
 
+fs = getLibrary 'fs'
 error = getUtility 'error'
-fileHelper = getUtility 'file'
 
 modelPath = path.join pathes.app, 'model'
 
 loadModels = () ->
 	self = @
-	models = fileHelper.loadDirJsSync modelPath
+	models = fs.loadDirJsSync modelPath
 
 	for model in models
 		self.set model
