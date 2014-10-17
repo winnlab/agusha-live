@@ -1,6 +1,6 @@
 {
   "name": "Jupiter",
-  "version": "1.3.1-alpha.2",
+  "version": "1.7.1-alpha.2",
   "description": "Jupiter framework",
   "main": "index.js",
   "scripts": {
