@@ -2,8 +2,10 @@
 mongoose = require 'mongoose'
 _ = require 'underscore'
 
-Mapper = getLibrary('core/data/mapper')
-Pool = getLibrary('core/data/mapper/pool')
+Mapper = getLibrary 'core/data/mapper'
+Pool = getLibrary 'core/data/mapper/pool'
+
+error = getUtility 'core/error'
 
 class MongooseCrud
 	constructor: (options) ->

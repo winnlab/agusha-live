@@ -8,7 +8,7 @@ should = require 'should'
 
 index = require '../../../../../../core/index'
 
-Mapper = getLibrary 'coredata/mapper'
+Mapper = getLibrary 'core/data/mapper'
 Pool = getLibrary 'core/data/mapper/pool'
 Crud = getLibrary 'core/data/crud'
 
@@ -36,9 +36,6 @@ crudOpts =
 	modelName: 'User'
 	ctx: MongooseMapper
 	pool: MongoosePool
-
-# before () ->
-# 	MongooseMapper.connect()
 
 describe '#Data', () ->
 	describe '#Crud', ()->
