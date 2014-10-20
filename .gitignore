@@ -5,3 +5,9 @@ model/*
 # Mac system file
 .DS_Store
 node_modules
+
+static/uploads/*.jpg
+static/uploads/*.png
+static/uploads/*.gif
+
+
