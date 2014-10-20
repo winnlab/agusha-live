@@ -18,6 +18,9 @@ settedModel =
 		name:
 			type: String
 			required: true
+		profile:
+			firstName:
+				type: String
 	name: "User"
 	options:
 		collection: "test"
@@ -238,3 +241,42 @@ describe '#Server', ->
 								should(user).eql null
 
 								done()
+
+			it 'should update nested data', (done) ->
+				server = new Server
+
+				userRest = new Rest 'Mongoose', restOpts
+
+				server.use '/rest/data', bodyParser.json()
+				server.use '/rest/data', bodyParser.urlencoded extended: true
+				server.use '/rest/data', userRest.http isModified: true
+
+				request = require 'supertest'
+
+				userRest.post
+					name: 'Senin Roman'
+				, (err, createdUser) ->
+					should(err).eql null
+
+					expected = createdUser.toObject()
+					expected._id = ""+expected._id
+					expected.profile =
+						firstName: "Roman"
+
+					request(server.express)
+						.put('/rest/data/'+expected._id)
+						.send({profile: { firstName: "Roman" }})
+						.expect('Content-Type', 'application/json; charset=utf-8')
+						.end (err, res) ->
+							should(err).eql null
+							response = JSON.parse res.text
+							user = response.data
+
+							response.success.should.be.ok
+							user._id.should.eql expected._id
+							user.should.have.property 'profile'
+							user.profile.should.have.property 'firstName'
+							user.profile.firstName.should.eql 'Roman'
+
+							userRest.deleteOne user._id, done
+
