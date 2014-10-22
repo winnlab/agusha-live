@@ -79,10 +79,11 @@ class Loader
 
 			valueName = valueNameMatch[1]
 
-			if not self.moduleOptions[module] or not valueName
+			if not valueName
 				return false
 
 			value = args[item]
+			self.moduleOptions[module] = {}
 			self.moduleOptions[module][valueName] = value
 
 	constructor: () ->
@@ -143,7 +144,8 @@ class Loader
 		_.each modules, (module, name, list) ->
 			options = _.extend bundle[name], moduleOptions[name]
 
-			module.start options
+			if options.active == 1
+				module.start options
 
 
 Loader.class = Loader
