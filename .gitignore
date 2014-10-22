@@ -11,3 +11,4 @@ static/uploads/*.png
 static/uploads/*.gif
 
 
+package.json
