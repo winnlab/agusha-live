@@ -1,5 +1,8 @@
 
 path = require 'path'
+url = require 'url'
+request = require 'request'
+crypto = require 'crypto'
 
 fs = require 'fs-extra'
 _ = require 'underscore'
@@ -59,9 +62,38 @@ loadDirJsSync = (dir) ->
 	
 	requireJsFiles dir, files
 
+fetch = (sourceUrl, dest, callback) ->
+	ext = path.extname sourceUrl
+	solt = "#{Date.now()}"
+	filename = crypto.createHash('md5').update(sourceUrl).update(solt).digest('hex')
+	filePath = (path.join dest, filename) + ext
+	sourceUrlParsed = url.parse sourceUrl
+	sourceUrlParsed.uri = sourceUrlParsed.href
+
+	returned = {}
+
+	request.head sourceUrlParsed, (err, res, body) ->
+		if err
+			return callback err
+
+		endCallback = () ->
+			returned.path = filePath
+
+			callback null, returned
+
+		req = request(sourceUrlParsed)
+			.pipe(fs.createWriteStream(filePath))
+			.on('error', callback)
+			.on('close', endCallback)
+			# .end()
+
+
+
+
 fs.readDirJs = readDirJs
 fs.readDirJsSync = readDirJsSync
 fs.loadDirJs = loadDirJs
 fs.loadDirJsSync = loadDirJsSync
+fs.fetch = fetch
 
 module.exports = exports = fs
