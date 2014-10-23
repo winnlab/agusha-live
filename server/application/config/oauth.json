@@ -1,0 +1,21 @@
+{
+	"oauth": {
+		"fb": {
+			"Id": "812840382107432",
+			"secret": "2d82f2e09e4c47eb9a4d5e5b8e614700",
+			"callback": "http://localhost:8081/registration/fb/callback"
+		},
+		"ok": {
+			"Id": "1105213696",
+			"public": "CBAKDBOCEBABABABA",
+			"secret": "44C105F9A352A2923B34FCF0",
+			"callback": "http://localhost:8081/registration/ok/callback"
+		},
+		"vk": {
+			"Id": "4581691",
+			"secret": "AiXIURFGjfwzdXt3sArc",
+			"callback": "http://localhost:8081/registration/vk/callback"
+		}
+
+	}
+}
