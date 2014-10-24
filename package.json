@@ -41,6 +41,8 @@
     "mocha": "1.21.3",
     "supertest": "0.14.0",
     "request": "2.44.0",
-    "method-override": "~2.2.0"
+    "method-override": "~2.2.0",
+    "jade": "~1.7.0",
+    "serve-static": "~1.7.0"
   }
 }
